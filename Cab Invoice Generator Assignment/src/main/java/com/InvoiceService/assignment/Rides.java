@@ -4,14 +4,16 @@ public class Rides {
 
 	private double time;
 	private double distance;
+	private String type;
 
 	public Rides() {
 
 	}
 
-	public Rides(double time, double distance) {
+	public Rides(double time, double distance, String type) {
 		this.time = time;
 		this.distance = distance;
+		this.type = type;
 	}
 
 	public double getTime() {
@@ -20,6 +22,14 @@ public class Rides {
 
 	public void setTime(double time) {
 		this.time = time;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public double getDistance() {
@@ -32,7 +42,7 @@ public class Rides {
 
 	@Override
 	public String toString() {
-		return "Rides [time=" + time + ", distance=" + distance + "]";
+		return "Rides [time=" + time + ", distance=" + distance + ", type=" + type + "]";
 	}
 
 }
