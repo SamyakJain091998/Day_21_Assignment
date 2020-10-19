@@ -1,6 +1,7 @@
 package com.InvoiceService.assignment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,6 +64,7 @@ public class InvoiceServiceTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void givenMultipleDistanceAndTime_ShouldReturn_TotalNumberOfRides_TotalFare_AverageFarePerRide()
 			throws IllegalStateException {
@@ -83,4 +85,54 @@ public class InvoiceServiceTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void givenUserId_ReturnsTheInvoice() throws IllegalStateException {
+		try {
+			System.out.print("Enter the number of users : ");
+			int numberOfUsers = sc.nextInt();
+			Invoices invoice = null;
+			List<Integer> userIdList = new ArrayList<>();
+			HashMap<Integer, Invoices> invoiceMap = new HashMap<Integer, Invoices>();
+
+			while (numberOfUsers-- > 0) {
+				Integer userId;
+				while (true) {
+					System.out.print("Enter the user Id : ");
+					userId = sc.nextInt();
+					if (!(userIdList.contains(userId))) {
+						userIdList.add(userId);
+						break;
+					} else {
+						System.out.println("The user Id is already occupied. Please enter a valid/ new user Id : ");
+						continue;
+					}
+				}
+				List<Rides> rideList = invoiceGenerator.addDetailsOfRides();
+
+				double totalFare = invoiceGenerator.returnsAggregateTotalFare(rideList);
+				int totalNumberOfRides = invoiceGenerator.returnsRideListSize();
+				double AverageFarePerRide = invoiceGenerator.returnsAverageFare(totalFare, totalNumberOfRides);
+				invoice = new Invoices(totalFare, totalNumberOfRides, AverageFarePerRide);
+				invoiceMap.put(userId, invoice);
+				System.out.println("===================");
+			}
+
+			System.out.print("Enter the user Id of the user you want to search details of : ");
+			Integer searchForUserId = sc.nextInt();
+			if (invoiceMap.containsKey(searchForUserId)) {
+				System.out.println("Invoice details for this user are : ");
+				System.out.println(invoiceMap.get(searchForUserId));
+				Assert.assertTrue(true);
+			} else {
+				System.out.println("Oops! There's no such user present.");
+				System.exit(0);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Oops! It's an exception.");
+			System.exit(0);
+		}
+	}
+
 }
