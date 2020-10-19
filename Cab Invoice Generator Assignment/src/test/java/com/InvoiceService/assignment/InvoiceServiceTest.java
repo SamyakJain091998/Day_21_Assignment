@@ -12,6 +12,7 @@ import org.junit.Test;
 
 public class InvoiceServiceTest {
 
+	HashMap<Integer, Invoices> invoiceMap = null;
 	InvoiceGenerator invoiceGenerator = null;
 	Scanner sc;
 
@@ -93,7 +94,7 @@ public class InvoiceServiceTest {
 			int numberOfUsers = sc.nextInt();
 			Invoices invoice = null;
 			List<Integer> userIdList = new ArrayList<>();
-			HashMap<Integer, Invoices> invoiceMap = new HashMap<Integer, Invoices>();
+			invoiceMap = new HashMap<Integer, Invoices>();
 
 			while (numberOfUsers-- > 0) {
 				Integer userId;
@@ -108,14 +109,14 @@ public class InvoiceServiceTest {
 						continue;
 					}
 				}
-				List<Rides> rideList = invoiceGenerator.addDetailsOfRides();
 
+				List<Rides> rideList = invoiceGenerator.addDetailsOfRides();
 				double totalFare = invoiceGenerator.returnsAggregateTotalFare(rideList);
 				int totalNumberOfRides = invoiceGenerator.returnsRideListSize();
 				double AverageFarePerRide = invoiceGenerator.returnsAverageFare(totalFare, totalNumberOfRides);
+
 				invoice = new Invoices(totalFare, totalNumberOfRides, AverageFarePerRide);
 				invoiceMap.put(userId, invoice);
-				System.out.println("===================");
 			}
 
 			System.out.print("Enter the user Id of the user you want to search details of : ");
@@ -125,6 +126,7 @@ public class InvoiceServiceTest {
 				System.out.println(invoiceMap.get(searchForUserId));
 				Assert.assertTrue(true);
 			} else {
+				Assert.assertTrue(false);
 				System.out.println("Oops! There's no such user present.");
 				System.exit(0);
 			}
