@@ -73,7 +73,7 @@ public class InvoiceServiceTest {
 			Assert.assertEquals(105, totalFare, 0.0);
 
 			int totalNumberOfRides = invoiceGenerator.returnsRideListSize();
-			Assert.assertEquals(3, totalNumberOfRides);
+			Assert.assertEquals(2, totalNumberOfRides);
 
 			double AverageFarePerRide = invoiceGenerator.returnsAverageFare(totalFare, totalNumberOfRides);
 			Assert.assertEquals(52.50, AverageFarePerRide, 0.0);
@@ -83,5 +83,4 @@ public class InvoiceServiceTest {
 			e.printStackTrace();
 		}
 	}
-
 }

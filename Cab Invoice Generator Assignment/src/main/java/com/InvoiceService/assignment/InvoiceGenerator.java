@@ -10,6 +10,7 @@ public class InvoiceGenerator {
 	private double distance;
 	private int costPerMinute = 1;
 	private int costPerKm = 10;
+	private List<Rides> rideList = null;
 
 	public InvoiceGenerator() {
 
@@ -37,20 +38,37 @@ public class InvoiceGenerator {
 		return totalSumOfFare;
 	}
 
-	public List<Rides> addDetailsOfRides() {
+	public List<Rides> addDetailsOfRides() throws IllegalStateException {
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the count of rides : ");
-		int numberOfRides = sc.nextInt();
-		int dummyNumberOfRides = numberOfRides;
-		List<Rides> rideList = new ArrayList();
-		while (dummyNumberOfRides-- > 0) {
-			System.out.println("Enter time and distance for ride number " + (numberOfRides - dummyNumberOfRides));
-			double time = sc.nextDouble();
-			double distance = sc.nextDouble();
-			Rides ride = new Rides(time, distance);
-			rideList.add(ride);
+		try {
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Enter the count of rides : ");
+			int numberOfRides = sc.nextInt();
+			int dummyNumberOfRides = numberOfRides;
+			rideList = new ArrayList();
+			while (dummyNumberOfRides-- > 0) {
+				System.out.println("Enter time and distance for ride number " + (numberOfRides - dummyNumberOfRides));
+				double time = sc.nextDouble();
+				double distance = sc.nextDouble();
+				Rides ride = new Rides(time, distance);
+				rideList.add(ride);
+			}
+			return rideList;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Ooops! It's an exception");
+			System.exit(0);
 		}
-		return rideList;
+		return null;
+	}
+
+	public double returnsAverageFare(double totalFare, int totalNumberOfRides) {
+		// TODO Auto-generated method stub
+		return (totalFare / totalNumberOfRides);
+	}
+
+	public int returnsRideListSize() {
+		// TODO Auto-generated method stub
+		return rideList.size();
 	}
 }
