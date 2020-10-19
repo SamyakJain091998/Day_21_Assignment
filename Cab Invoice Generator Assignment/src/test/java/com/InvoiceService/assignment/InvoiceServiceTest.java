@@ -50,6 +50,7 @@ public class InvoiceServiceTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void givenMultipleDistanceAndTime_ShouldReturn_TotalAggregateFareOfTheJourney() {
 		try {
@@ -61,4 +62,26 @@ public class InvoiceServiceTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void givenMultipleDistanceAndTime_ShouldReturn_TotalNumberOfRides_TotalFare_AverageFarePerRide()
+			throws IllegalStateException {
+		try {
+			List<Rides> rideList = invoiceGenerator.addDetailsOfRides();
+
+			double totalFare = invoiceGenerator.returnsAggregateTotalFare(rideList);
+			Assert.assertEquals(105, totalFare, 0.0);
+
+			int totalNumberOfRides = invoiceGenerator.returnsRideListSize();
+			Assert.assertEquals(3, totalNumberOfRides);
+
+			double AverageFarePerRide = invoiceGenerator.returnsAverageFare(totalFare, totalNumberOfRides);
+			Assert.assertEquals(52.50, AverageFarePerRide, 0.0);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
 }
