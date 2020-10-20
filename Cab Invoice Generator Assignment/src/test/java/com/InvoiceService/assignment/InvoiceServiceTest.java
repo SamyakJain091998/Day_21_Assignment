@@ -90,42 +90,39 @@ public class InvoiceServiceTest {
 	@Test
 	public void givenUserId_ReturnsTheInvoice() throws IllegalStateException {
 		try {
+			Invoices invoice = null;
+			invoiceMap = new HashMap<Integer, Invoices>();
+
 			System.out.print("Enter the number of users : ");
 			int numberOfUsers = sc.nextInt();
-			Invoices invoice = null;
-			List<Integer> userIdList = new ArrayList<>();
-			invoiceMap = new HashMap<Integer, Invoices>();
 
 			while (numberOfUsers-- > 0) {
 				Integer userId;
-				while (true) {
-					System.out.print("Enter the user Id : ");
-					userId = sc.nextInt();
-					if (!(userIdList.contains(userId))) {
-						userIdList.add(userId);
-						break;
-					} else {
-						System.out.println("The user Id is already occupied. Please enter a valid/ new user Id : ");
-						continue;
-					}
-				}
+				userId = invoiceGenerator.takeUserIdInput();
 
 				List<Rides> rideList = invoiceGenerator.addDetailsOfRides();
+				System.out.println("Thank you! Details added successfully for the user.......");
+
 				double totalFare = invoiceGenerator.returnsAggregateTotalFare(rideList);
 				int totalNumberOfRides = invoiceGenerator.returnsRideListSize();
 				double AverageFarePerRide = invoiceGenerator.returnsAverageFare(totalFare, totalNumberOfRides);
-
 				invoice = new Invoices(totalFare, totalNumberOfRides, AverageFarePerRide);
 				invoiceMap.put(userId, invoice);
 			}
 
+//			Search according to the user Id...
+
 			System.out.print("Enter the user Id of the user you want to search details of : ");
 			Integer searchForUserId = sc.nextInt();
+
+//			In case the if statement gets executed, The test is passed.
 			if (invoiceMap.containsKey(searchForUserId)) {
 				System.out.println("Invoice details for this user are : ");
 				System.out.println(invoiceMap.get(searchForUserId));
 				Assert.assertTrue(true);
-			} else {
+			}
+//			In case the else statement gets executed, The test is failed..
+			else {
 				Assert.assertTrue(false);
 				System.out.println("Oops! There's no such user present.");
 				System.exit(0);
@@ -136,7 +133,5 @@ public class InvoiceServiceTest {
 			System.exit(0);
 		}
 	}
-	
-	
 
 }

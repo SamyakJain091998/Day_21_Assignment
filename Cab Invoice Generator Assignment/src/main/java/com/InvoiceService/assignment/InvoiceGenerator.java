@@ -14,6 +14,7 @@ public class InvoiceGenerator {
 	private int costPerKmPremiumRide = 20;
 
 	private List<Rides> rideList = null;
+	private List<Integer> userIdList = new ArrayList<>();
 
 	public InvoiceGenerator() {
 
@@ -95,5 +96,22 @@ public class InvoiceGenerator {
 	public int returnsRideListSize() {
 		// TODO Auto-generated method stub
 		return rideList.size();
+	}
+
+	public Integer takeUserIdInput() {
+		// TODO Auto-generated method stub
+		Integer userId;
+		Scanner sc = new Scanner(System.in);
+		while (true) {
+			System.out.print("Enter the user Id : ");
+			userId = sc.nextInt();
+			if (!(userIdList.contains(userId))) {
+				userIdList.add(userId);
+				return userId;
+			} else {
+				System.out.println("The user Id is already occupied. Please enter a valid/ new user Id : ");
+				continue;
+			}
+		}
 	}
 }
